@@ -1,0 +1,19 @@
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Distribution files
+dist
+
+# MacOS
+.DS_Store
+
+# NPM
+node_modules
+
+# Vitest
+coverage
+
+# Private and Public keys
+*.pem
