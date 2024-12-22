@@ -7,6 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// enum Status {
+//   ALIVE
+//   DEAD
+//   UNKNOWN
+// }
+
+// enum Gender {
+//   MALE
+//   FEMALE
+//   UNKNOWN
+// }
+
 model User {
   id        String   @id @default(uuid())
   birthdate DateTime @db.Date
@@ -18,3 +30,243 @@ model User {
 
   @@map("users")
 }
+
+model Show {
+  id          String   @id @default(uuid())
+  name        String   @db.VarChar(100)
+  description String?  @db.Text
+  imageUrl    String   @map("image_url") @db.VarChar(255)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @map("updated_at")
+
+  movies Movie[]
+  // series Series[]
+  // groups ShowGroup[]
+
+  @@map("shows")
+}
+
+model Movie {
+  id          String   @id @default(uuid())
+  showId      String   @map("show_id")
+  releaseDate DateTime @map("release_date")
+  duration    String   @map("duration") @db.Char(8)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @map("updated_at")
+
+  show Show @relation(fields: [showId], references: [id])
+  // characters MovieCharacter[]
+
+  @@map("movies")
+}
+
+// model Series {
+//   id          String    @id @default(uuid())
+//   showId      String    @map("show_id")
+//   releaseDate DateTime?
+//   finishedAt  DateTime?
+//   createdAt   DateTime  @default(now()) @map("created_at")
+//   updatedAt   DateTime  @default(now()) @map("updated_at")
+
+//   show    Show     @relation(fields: [showId], references: [id])
+//   seasons Season[]
+
+//   @@map("series")
+// }
+
+// model Season {
+//   id          String    @id @default(uuid())
+//   seriesId    String    @map("series_id")
+//   code        String    @db.VarChar(10)
+//   releaseDate DateTime?
+//   finishedAt  DateTime?
+//   imageUrl    String?   @map("image_url") @db.VarChar(255)
+//   createdAt   DateTime  @default(now()) @map("created_at")
+//   updatedAt   DateTime  @default(now()) @map("updated_at")
+
+//   series   Series    @relation(fields: [seriesId], references: [id])
+//   episodes Episode[]
+
+//   @@map("seasons")
+// }
+
+// model Episode {
+//   id        String    @id @default(uuid())
+//   seasonId  String    @map("season_id")
+//   code      String    @db.VarChar(10)
+//   name      String    @db.VarChar(100)
+//   synopsis  String?   @db.Text
+//   airDate   DateTime? @map("air_date")
+//   duration  String    @map("duration") @db.Char(8)
+//   createdAt DateTime  @default(now()) @map("created_at")
+//   updatedAt DateTime  @default(now()) @map("updated_at")
+
+//   season Season @relation(fields: [seasonId], references: [id])
+//   // characters EpisodeCharacter[]
+
+//   @@map("episodes")
+// }
+
+// model Character {
+//   id        String    @id @default(uuid())
+//   familyId  String?   @map("family_id")
+//   full_name String    @db.VarChar(100)
+//   status    Status
+//   gender    Gender
+//   birthDate DateTime?
+//   imageUrl  String    @map("image_url") @db.VarChar(255)
+//   playedBy  String    @map("played_by") @db.VarChar(100)
+//   createdAt DateTime  @default(now()) @map("created_at")
+//   updatedAt DateTime  @default(now()) @map("updated_at")
+
+//   family           Family?            @relation(fields: [familyId], references: [id])
+//   movieRoles       MovieCharacter[]
+//   episodeRoles     EpisodeCharacter[]
+//   groupsCharacters GroupCharacter[]
+
+//   @@map("characters")
+// }
+
+// model Family {
+//   id        String   @id @default(uuid())
+//   lastName  String   @map("last_name") @db.VarChar(100)
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @default(now()) @map("updated_at")
+
+//   characters Character[]
+
+//   @@map("families")
+// }
+
+// model Group {
+//   id          String   @id @default(uuid())
+//   name        String   @db.VarChar(100)
+//   status      Status
+//   description String?  @db.Text
+//   createdAt   DateTime @default(now()) @map("created_at")
+//   updatedAt   DateTime @default(now()) @map("updated_at")
+
+//   locations   GroupLocation[]
+//   characters  GroupCharacter[]
+//   ShowsGroups ShowGroup[]
+
+//   @@map("groups")
+// }
+
+// model Country {
+//   id        String   @id @default(uuid())
+//   name      String   @db.VarChar(100)
+//   acronym   String   @db.VarChar(10)
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @default(now()) @map("updated_at")
+
+//   states State[]
+
+//   @@map("countries")
+// }
+
+// model State {
+//   id        String   @id @default(uuid())
+//   countryId String?  @map("country_id")
+//   name      String   @db.VarChar(100)
+//   acronym   String   @db.VarChar(10)
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @default(now()) @map("updated_at")
+
+//   country Country? @relation(fields: [countryId], references: [id])
+//   cities  City[]
+
+//   @@map("states")
+// }
+
+// model City {
+//   id        String   @id @default(uuid())
+//   stateId   String?  @map("state_id")
+//   name      String   @db.VarChar(100)
+//   zipCode   String   @map("zip_code") @db.VarChar(20)
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @default(now()) @map("updated_at")
+
+//   state     State?     @relation(fields: [stateId], references: [id])
+//   locations Location[]
+
+//   @@map("cities")
+// }
+
+// model Location {
+//   id        String   @id @default(uuid())
+//   cityId    String?  @map("city_id")
+//   name      String   @db.VarChar(100)
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @default(now()) @map("updated_at")
+
+//   city   City?           @relation(fields: [cityId], references: [id])
+//   groups GroupLocation[]
+
+//   @@map("locations")
+// }
+
+// model MovieCharacter {
+//   movieId     String   @map("movie_id")
+//   characterId String   @map("character_id")
+//   createdAt   DateTime @default(now()) @map("created_at")
+//   updatedAt   DateTime @default(now()) @map("updated_at")
+
+//   movie     Movie     @relation(fields: [movieId], references: [id])
+//   character Character @relation(fields: [characterId], references: [id])
+
+//   @@id([movieId, characterId])
+//   @@map("movies_characters")
+// }
+
+// model EpisodeCharacter {
+//   episodeId   String   @map("episode_id")
+//   characterId String   @map("character_id")
+//   createdAt   DateTime @default(now()) @map("created_at")
+//   updatedAt   DateTime @default(now()) @map("updated_at")
+
+//   episode   Episode   @relation(fields: [episodeId], references: [id])
+//   character Character @relation(fields: [characterId], references: [id])
+
+//   @@id([episodeId, characterId])
+//   @@map("episodes_characters")
+// }
+
+// model ShowGroup {
+//   showId  String @map("show_id")
+//   groupId String @map("group_id")
+
+//   show  Show  @relation(fields: [showId], references: [id])
+//   group Group @relation(fields: [groupId], references: [id])
+
+//   @@id([showId, groupId])
+//   @@map("shows_groups")
+// }
+
+// model GroupCharacter {
+//   groupId     String   @map("group_id")
+//   characterId String   @map("character_id")
+//   isLeader    Boolean
+//   createdAt   DateTime @default(now()) @map("created_at")
+//   updatedAt   DateTime @default(now()) @map("updated_at")
+
+//   group     Group     @relation(fields: [groupId], references: [id])
+//   character Character @relation(fields: [characterId], references: [id])
+
+//   @@id([groupId, characterId])
+//   @@map("groups_characters")
+// }
+
+// model GroupLocation {
+//   groupId        String   @map("group_id")
+//   locationId     String   @map("location_id")
+//   isLastLocation Boolean  @map("is_last_location")
+//   createdAt      DateTime @default(now()) @map("created_at")
+//   updatedAt      DateTime @default(now()) @map("updated_at")
+
+//   group    Group    @relation(fields: [groupId], references: [id])
+//   location Location @relation(fields: [locationId], references: [id])
+
+//   @@id([groupId, locationId])
+//   @@map("groups_locations")
+// }
