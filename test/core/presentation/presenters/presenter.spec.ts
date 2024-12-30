@@ -1,13 +1,13 @@
 import { Presenter } from '@/core/presentation/presenters/presenter'
 
-import { CSVToJSON } from '#/core/presentation/@helpers/csv-to-json'
+import { CSVToJSON } from '#/core/presentation/@helpers/csv-to-json.helper'
 import {
   type FakeCollectionDTO,
   type FakeCollectionOutput,
   makeFakeCollectionDTOStub,
   type FakeOutput,
   type FakeDTO,
-} from '#/core/presentation/@mocks/fake-presenter-stub'
+} from '#/core/presentation/@mocks/fake-presenter.stub'
 
 class FakePresenter extends Presenter<FakeCollectionDTO, FakeCollectionOutput> {
   static toJSON(fakeCollectionDTO: FakeCollectionDTO): FakeCollectionOutput {

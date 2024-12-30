@@ -1,4 +1,4 @@
-import { anyFunctionWithEitherReturn } from '#/core/application/@mocks/any-function-with-either-return'
+import { anyFunctionWithEitherReturn } from '#/core/application/@mocks/any-function-with-either-return.stub'
 
 describe('Left', () => {
   it('should be able to return error', () => {

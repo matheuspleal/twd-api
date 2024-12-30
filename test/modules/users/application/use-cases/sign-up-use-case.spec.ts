@@ -5,28 +5,28 @@ import { type MockProxy, mock } from 'vitest-mock-extended'
 import {
   type HashGenerator,
   type HashGeneratorGateway,
-} from '@/core/application/gateways/cryptography/hash-generator'
-import { EmailAlreadyExistsError } from '@/modules/users/application/errors/email-already-exists-error'
-import { InvalidBirthdateError } from '@/modules/users/application/errors/invalid-birthdate-error'
-import { InvalidEmailError } from '@/modules/users/application/errors/invalid-email-error'
+} from '@/core/application/gateways/cryptography/hash-generator.gateway'
 import {
   type CreateUserRepositoryInput,
   type CreateUserRepositoryOutput,
   type CreateUserRepository,
-} from '@/modules/users/application/repositories/create-user-repository'
-import { type FindUserByEmailRepository } from '@/modules/users/application/repositories/find-user-by-email-repository'
+} from '@/modules/users/application/repositories/create-user.repository'
+import { type FindUserByEmailRepository } from '@/modules/users/application/repositories/find-user-by-email.repository'
+import { EmailAlreadyExistsError } from '@/modules/users/application/use-cases/errors/email-already-exists.error'
+import { InvalidBirthdateError } from '@/modules/users/application/use-cases/errors/invalid-birthdate.error'
+import { InvalidEmailError } from '@/modules/users/application/use-cases/errors/invalid-email.error'
 import {
   SignUpUseCase,
   type SignUpUseCaseInput,
-} from '@/modules/users/application/use-cases/sign-up-use-case'
-import { UserEntity } from '@/modules/users/domain/entities/user-entity'
+} from '@/modules/users/application/use-cases/sign-up.use-case'
+import { UserEntity } from '@/modules/users/domain/entities/user.entity'
 
 import {
   hashedPasswordStub,
   plaintextPasswordStub,
 } from '#/modules/users/application/@mocks/password-stub'
 import { makeRequiredSignUpInputStub } from '#/modules/users/application/@mocks/sign-up-input-stub'
-import { makeUserEntityStub } from '#/modules/users/domain/@mocks/user-entity-stub'
+import { makeUserEntityStub } from '#/modules/users/domain/@mocks/user-entity.stub'
 
 describe('SignUpUseCase', () => {
   let sut: SignUpUseCase
