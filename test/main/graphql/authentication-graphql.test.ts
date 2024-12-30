@@ -3,19 +3,19 @@ import { PrismaClient } from '@prisma/client'
 import { type FastifyInstance } from 'fastify'
 import request from 'supertest'
 
-import { BcryptAdapter } from '@/core/infra/gateways/bcrypt-adapter'
-import { StatusCode } from '@/core/presentation/helpers/http-helpers'
-import { appSetup } from '@/main/setup/app-setup'
-import { UnauthorizedError } from '@/modules/users/application/errors/unauthorized-error'
-import { BirthdateVO } from '@/modules/users/domain/value-objects/birthdate-vo'
+import { UnauthorizedError } from '@/core/application/use-cases/errors/unauthorized.error'
+import { BcryptAdapter } from '@/core/infra/gateways/bcrypt-adapter.gateway'
+import { StatusCode } from '@/core/presentation/helpers/http-response.helper'
+import { appSetup } from '@/main/setup/app.setup'
+import { BirthdateVO } from '@/modules/users/domain/value-objects/birthdate.vo'
 
-import { ISODateRegExp } from '#/core/domain/@helpers/iso-date-regexp'
-import { UUIDRegExp } from '#/core/domain/@helpers/uuid-regexp'
+import { ISODateRegExp } from '#/core/domain/@helpers/iso-date-regexp.helper'
+import { UUIDRegExp } from '#/core/domain/@helpers/uuid-regexp.helper'
 import {
   makeRequiredSignUpInputStub,
   makeSignUpInputStub,
 } from '#/modules/users/application/@mocks/sign-up-input-stub'
-import { createUser } from '#/modules/users/infra/@helpers/user-persistence-prisma'
+import { createUser } from '#/modules/users/infra/@helpers/user-persistence-prisma.helper'
 
 const listOfSignUpFields = ['fullName', 'birthdate', 'email', 'password']
 const listOfSignInFields = ['email', 'password']

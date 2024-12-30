@@ -4,22 +4,22 @@ import { type MockProxy, mock } from 'vitest-mock-extended'
 import {
   type HashCompare,
   type HashCompareGateway,
-} from '@/core/application/gateways/cryptography/hash-compare'
+} from '@/core/application/gateways/cryptography/hash-compare.gateway'
 import {
   type TokenGenerator,
   type TokenGeneratorGateway,
-} from '@/core/application/gateways/token/token-generator'
-import { UnauthorizedError } from '@/modules/users/application/errors/unauthorized-error'
-import { type FindUserByEmailRepository } from '@/modules/users/application/repositories/find-user-by-email-repository'
+} from '@/core/application/gateways/token/token-generator.gateway'
+import { UnauthorizedError } from '@/core/application/use-cases/errors/unauthorized.error'
+import { type FindUserByEmailRepository } from '@/modules/users/application/repositories/find-user-by-email.repository'
 import {
   SignInUseCase,
   type SignInUseCaseInput,
-} from '@/modules/users/application/use-cases/sign-in-use-case'
-import { type UserEntity } from '@/modules/users/domain/entities/user-entity'
+} from '@/modules/users/application/use-cases/sign-in.use-case'
+import { type UserEntity } from '@/modules/users/domain/entities/user.entity'
 
 import { plaintextPasswordStub } from '#/modules/users/application/@mocks/password-stub'
 import { makeSignInInputStub } from '#/modules/users/application/@mocks/sign-in-input-stub'
-import { makeUserEntityStub } from '#/modules/users/domain/@mocks/user-entity-stub'
+import { makeUserEntityStub } from '#/modules/users/domain/@mocks/user-entity.stub'
 
 describe('SignInUseCase', () => {
   let sut: SignInUseCase
