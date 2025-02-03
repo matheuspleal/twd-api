@@ -1,11 +1,11 @@
 ![Node.js Boilerplate](https://i.imgur.com/onA5Z5h.jpg)
 <div align="center">
   <h1>Node.js Boilerplate</h1>
-  <a href="https://github.com/matheuspleal/twd-api/actions">
-    <img src="https://github.com/matheuspleal/twd-api/actions/workflows/ci.yml/badge.svg?branch=main" alt="Build Status">
+  <a href="https://github.com/matheuspleal/node-js-boilerplate/actions">
+    <img src="https://github.com/matheuspleal/node-js-boilerplate/actions/workflows/ci.yml/badge.svg?branch=main" alt="Build Status">
   </a>
-  <a href="https://coveralls.io/github/matheuspleal/twd-api?branch=main">
-    <img src="https://coveralls.io/repos/github/matheuspleal/twd-api/badge.svg?branch=main" alt="Coverage Status">
+  <a href="https://coveralls.io/github/matheuspleal/node-js-boilerplate?branch=main">
+    <img src="https://coveralls.io/repos/github/matheuspleal/node-js-boilerplate/badge.svg?branch=main" alt="Coverage Status">
   </a>
   <a href="http://standardjs.com">
     <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="js-standard-style">
@@ -80,7 +80,7 @@ This section describes the main **libraries** and **tools** used in the project,
 - [@as-integrations/fastify](https://www.npmjs.com/package/@as-integrations/fastify) - 2.1.1
 - [@fastify/cors](https://github.com/fastify/fastify-cors) - 9.0.1
 - [@prisma/client](https://github.com/prisma/prisma) - 6.1.0
-- [@scalar/fastify-api-reference](https://github.com/scalar/scalar?tab=readme-ov-file#fastify) - 1.25.92
+- [@scalar/fastify-api-reference](https://github.com/scalar/scalar?tab=readme-ov-file#fastify) - 1.25.90
 - [@scalar/themes](https://github.com/scalar/scalar#themes) - 0.9.58
 - [bcryptjs](https://github.com/dcodeIO/bcrypt.js) - 2.4.3
 - [fastify](https://github.com/fastify/fastifyp) - 4.27.0

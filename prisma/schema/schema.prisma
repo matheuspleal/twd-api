@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -18,47 +19,6 @@ datasource db {
 //   FEMALE
 //   UNKNOWN
 // }
-
-model User {
-  id        String   @id @default(uuid())
-  birthdate DateTime @db.Date
-  fullName  String   @map("full_name") @db.VarChar(100)
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("users")
-}
-
-model Show {
-  id          String   @id @default(uuid())
-  name        String   @db.VarChar(100)
-  description String?  @db.Text
-  imageUrl    String   @map("image_url") @db.VarChar(255)
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @default(now()) @map("updated_at")
-
-  movies Movie[]
-  // series Series[]
-  // groups ShowGroup[]
-
-  @@map("shows")
-}
-
-model Movie {
-  id          String   @id @default(uuid())
-  showId      String   @map("show_id")
-  releaseDate DateTime @map("release_date")
-  duration    String   @map("duration") @db.Char(8)
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @default(now()) @map("updated_at")
-
-  show Show @relation(fields: [showId], references: [id])
-  // characters MovieCharacter[]
-
-  @@map("movies")
-}
 
 // model Series {
 //   id          String    @id @default(uuid())

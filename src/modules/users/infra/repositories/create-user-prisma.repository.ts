@@ -1,4 +1,4 @@
-import { BasePrismaRepository } from '@/core/infra/repositories/base-prisma.repository'
+import { BaseGenericPrismaRepository } from '@/core/infra/repositories/prisma/base-generic-prisma.repository'
 import {
   type CreateUserRepositoryInput,
   type CreateUserRepositoryOutput,
@@ -7,7 +7,7 @@ import {
 import { UserMapper } from '@/modules/users/application/use-cases/mappers/user.mapper'
 
 export class CreateUserPrismaRepository
-  extends BasePrismaRepository
+  extends BaseGenericPrismaRepository
   implements CreateUserRepository
 {
   constructor() {

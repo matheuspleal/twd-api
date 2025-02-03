@@ -1,16 +1,4 @@
 -- CreateTable
-CREATE TABLE "shows" (
-    "id" TEXT NOT NULL,
-    "name" VARCHAR(100) NOT NULL,
-    "description" TEXT,
-    "image_url" VARCHAR(255) NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "shows_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "movies" (
     "id" TEXT NOT NULL,
     "show_id" TEXT NOT NULL,
@@ -20,6 +8,18 @@ CREATE TABLE "movies" (
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "movies_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "shows" (
+    "id" TEXT NOT NULL,
+    "title" VARCHAR(100) NOT NULL,
+    "description" TEXT,
+    "image_url" VARCHAR(255) NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "shows_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
