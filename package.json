@@ -105,6 +105,6 @@
     "@rollup/rollup-linux-x64-gnu": "4.9.5"
   },
   "engines": {
-    "node": "22.12.0"
+    "node": "22.13.1"
   }
 }
