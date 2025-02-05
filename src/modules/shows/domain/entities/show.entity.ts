@@ -4,7 +4,7 @@ import { type Optional } from '@/core/shared/types/optional.type'
 
 export interface ShowProps {
   title: string
-  description: string
+  description: string | null
   imageUrl: string
   createdAt: Date
   updatedAt: Date

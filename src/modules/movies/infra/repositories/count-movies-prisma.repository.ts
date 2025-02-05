@@ -19,11 +19,13 @@ export class CountMoviesPrismaRepository
     const count = await this.prisma.movie.count({
       where: {
         id: filters?.id,
-        title: filters?.title,
-        description: filters?.description,
         releaseDate: filters?.releaseDate,
         createdAt: filters?.createdAt,
         updatedAt: filters?.updatedAt,
+        show: {
+          title: filters?.title,
+          description: filters?.description,
+        },
       },
     })
     return {

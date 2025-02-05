@@ -26,16 +26,26 @@ export class FindManyMoviesPrismaRepository
   }: FindManyMoviesRepositoryInput &
     PrismaTypes): Promise<FindManyMoviesRepositoryOutput> {
     const { take, skip } = pagination
-    const where = {
-      id: filters?.id,
-      title: filters?.title,
-      description: filters?.description,
-      releaseDate: filters?.releaseDate,
-      createdAt: filters?.createdAt,
-      updatedAt: filters?.updatedAt,
-    }
     const foundMovies = await this.prisma.movie.findMany({
-      where,
+      include: {
+        show: {
+          select: {
+            title: true,
+            description: true,
+            imageUrl: true,
+          },
+        },
+      },
+      where: {
+        id: filters?.id,
+        releaseDate: filters?.releaseDate,
+        createdAt: filters?.createdAt,
+        updatedAt: filters?.updatedAt,
+        show: {
+          title: filters?.title,
+          description: filters?.description,
+        },
+      },
       orderBy,
       skip,
       take,

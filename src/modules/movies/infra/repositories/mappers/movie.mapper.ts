@@ -1,4 +1,7 @@
-import { type Movie as MoviePrisma } from '@prisma/client'
+import {
+  type Movie as MoviePrisma,
+  type Show as ShowPrisma,
+} from '@prisma/client'
 
 import { UniqueEntityIdVO } from '@/core/domain/value-objects/unique-entity-id.vo'
 import { Mapper } from '@/core/infra/repositories/mappers/mapper'
@@ -7,37 +10,35 @@ import {
   type Duration,
   DurationVO,
 } from '@/modules/movies/domain/value-objects/duration-vo'
+import { ShowEntity } from '@/modules/shows/domain/entities/show.entity'
 
-export class MovieMapper extends Mapper<MovieEntity, MoviePrisma> {
-  static toDomain(moviePrisma: MoviePrisma): MovieEntity {
+export type MoviePersistence = {
+  show: Pick<ShowPrisma, 'title' | 'description' | 'imageUrl'>
+} & MoviePrisma
+
+export class MovieMapper extends Mapper<MovieEntity, MoviePersistence> {
+  static toDomain(moviePersistence: MoviePersistence): MovieEntity {
     return MovieEntity.create(
       {
-        showId: moviePrisma.showId,
-        releaseDate: moviePrisma.releaseDate,
-        duration: new DurationVO(moviePrisma.duration as Duration),
-        createdAt: moviePrisma.createdAt,
-        updatedAt: moviePrisma.updatedAt,
+        showId: moviePersistence.showId,
+        show: ShowEntity.create(
+          {
+            title: moviePersistence.show.title,
+            description: moviePersistence.show.description,
+            imageUrl: moviePersistence.show.imageUrl,
+          },
+          new UniqueEntityIdVO(moviePersistence.showId),
+        ),
+        releaseDate: moviePersistence.releaseDate,
+        duration: new DurationVO(moviePersistence.duration as Duration),
+        createdAt: moviePersistence.createdAt,
+        updatedAt: moviePersistence.updatedAt,
       },
-      new UniqueEntityIdVO(moviePrisma.id),
+      new UniqueEntityIdVO(moviePersistence.id),
     )
   }
 
-  static toCollectionDomain(moviesModel: MoviePrisma[]): MovieEntity[] {
+  static toCollectionDomain(moviesModel: MoviePersistence[]): MovieEntity[] {
     return moviesModel.map<MovieEntity>(MovieMapper.toDomain)
-  }
-
-  static toPersistence(movieEntity: MovieEntity): MoviePrisma {
-    return {
-      id: movieEntity.id.toString(),
-      showId: movieEntity.showId,
-      releaseDate: movieEntity.releaseDate,
-      duration: movieEntity.duration.toValue(),
-      createdAt: movieEntity.createdAt,
-      updatedAt: movieEntity.updatedAt,
-    }
-  }
-
-  static toCollectionPersistence(movieEntities: MovieEntity[]): MoviePrisma[] {
-    return movieEntities.map<MoviePrisma>(MovieMapper.toPersistence)
   }
 }
