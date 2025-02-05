@@ -1,0 +1,13 @@
+model Movie {
+  id          String   @id @default(uuid())
+  showId      String   @map("show_id")
+  releaseDate DateTime @map("release_date")
+  duration    String   @map("duration") @db.Char(8)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @map("updated_at")
+
+  show Show @relation(fields: [showId], references: [id])
+  // characters MovieCharacter[]
+
+  @@map("movies")
+}
