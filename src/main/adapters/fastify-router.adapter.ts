@@ -1,21 +1,51 @@
+import camelcaseKeys from 'camelcase-keys'
 import {
   type FastifyReply,
   type FastifyRequest,
   type RouteHandlerMethod,
 } from 'fastify'
+import qs from 'qs'
 
 import { type HttpController } from '@/core/presentation/controllers/http.controller'
 import { InternalServerError } from '@/core/presentation/errors/internal-server.error'
 import { StatusCode } from '@/core/presentation/helpers/http-response.helper'
+import { resolvePaginationParams } from '@/core/shared/helpers/resolve-pagination-params.helper'
 
-export function fastifyRouterAdapter<HttpRequest, Data>(
-  controller: HttpController<HttpRequest, Data>,
-): RouteHandlerMethod {
+export type Filter = Record<string, unknown>
+
+export interface Page {
+  offset: number
+  limit: number
+}
+
+export function fastifyRouterAdapter<
+  HttpRequest extends { filter?: Filter; page?: Page },
+  Data,
+>(controller: HttpController<HttpRequest, Data>): RouteHandlerMethod {
   return async (request: FastifyRequest, reply: FastifyReply) => {
+    const { body, params, query } = request
+    const stringfyQuery = qs.stringify(query, {
+      arrayFormat: 'comma',
+      encode: false,
+    })
+    const parsedQuery = qs.parse(stringfyQuery, {
+      allowDots: false,
+      parseArrays: true,
+      comma: true,
+      depth: 10,
+    })
+    let paginationParams = parsedQuery?.page as unknown as Page
+    if (paginationParams) {
+      paginationParams = resolvePaginationParams(paginationParams)
+    }
+    const normalizedQuery = camelcaseKeys(
+      { ...parsedQuery, page: { ...paginationParams } },
+      { deep: true },
+    )
     const payload: HttpRequest = {
-      ...(request.body as any),
-      ...(request.params as any),
-      ...(request.query as any),
+      ...(body as any),
+      ...(params as any),
+      ...normalizedQuery,
     }
     const { statusCode, data } = await controller.handle(payload)
     switch (statusCode) {

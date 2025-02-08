@@ -21,7 +21,7 @@ export class FindManyMoviesPrismaRepository
   @BuildPrismaSortParam()
   async findMany({
     pagination,
-    filters,
+    filter,
     orderBy,
   }: FindManyMoviesRepositoryInput &
     PrismaTypes): Promise<FindManyMoviesRepositoryOutput> {
@@ -37,13 +37,13 @@ export class FindManyMoviesPrismaRepository
         },
       },
       where: {
-        id: filters?.id,
-        releaseDate: filters?.releaseDate,
-        createdAt: filters?.createdAt,
-        updatedAt: filters?.updatedAt,
+        id: filter?.id,
+        releaseDate: filter?.releaseDate,
+        createdAt: filter?.createdAt,
+        updatedAt: filter?.updatedAt,
         show: {
-          title: filters?.title,
-          description: filters?.description,
+          title: filter?.title,
+          description: filter?.description,
         },
       },
       orderBy,

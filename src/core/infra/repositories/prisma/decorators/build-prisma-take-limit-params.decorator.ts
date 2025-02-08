@@ -16,7 +16,7 @@ export function BuildPrismaTakeLimitParams() {
       }
       const prismaPagination: PrismaPaginationParams = {
         skip: resolveOffsetByPageAndLimit({
-          page: pagination.page,
+          offset: pagination.offset,
           limit: pagination.limit,
         }),
         take: pagination.limit,

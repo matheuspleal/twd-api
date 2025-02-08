@@ -4,22 +4,22 @@ import {
 } from '@/core/shared/constants/pagination-params.const'
 import { type PaginationParams } from '@/core/shared/contracts/pagination-params.contract'
 
-function resolvePage(page?: number): number {
-  if (!page || page < 0) {
+function resolveOffset(offset?: number): number {
+  if (!offset || offset < 0) {
     return DEFAULT_OFFSET
   }
-  return page
+  return offset
 }
 
 function resolveLimit(limit?: number): number {
-  if (!limit || limit < 0 || limit > 20) {
+  if (!limit || limit < 0 || limit > MAX_LIMIT) {
     return MAX_LIMIT
   }
   return limit
 }
 
 export interface ResolvePaginationParamsProps {
-  page?: number
+  offset?: number
   limit?: number
 }
 
@@ -27,7 +27,7 @@ export function resolvePaginationParams(
   resolvePaginationParams?: ResolvePaginationParamsProps,
 ): PaginationParams {
   return {
-    page: resolvePage(resolvePaginationParams?.page),
+    offset: resolveOffset(resolvePaginationParams?.offset),
     limit: resolveLimit(resolvePaginationParams?.limit),
   }
 }

@@ -14,17 +14,17 @@ export class CountMoviesPrismaRepository
   }
 
   async count({
-    filters,
+    filter,
   }: CountMoviesRepositoryInput): Promise<CountMoviesRepositoryOutput> {
     const count = await this.prisma.movie.count({
       where: {
-        id: filters?.id,
-        releaseDate: filters?.releaseDate,
-        createdAt: filters?.createdAt,
-        updatedAt: filters?.updatedAt,
+        id: filter?.id,
+        releaseDate: filter?.releaseDate,
+        createdAt: filter?.createdAt,
+        updatedAt: filter?.updatedAt,
         show: {
-          title: filters?.title,
-          description: filters?.description,
+          title: filter?.title,
+          description: filter?.description,
         },
       },
     })

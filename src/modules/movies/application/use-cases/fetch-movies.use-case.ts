@@ -25,7 +25,7 @@ export interface FetchMoviesUseCaseSort {
 
 export interface FetchMoviesUseCaseInput {
   pagination: PaginationParams
-  filters?: FetchMoviesUseCaseFilters
+  filter?: FetchMoviesUseCaseFilters
   sort?: SortParams<FetchMoviesUseCaseSort>
 }
 
@@ -47,16 +47,17 @@ export class FetchMoviesUseCase
 
   async execute({
     pagination,
-    filters,
+    filter,
     sort,
   }: FetchMoviesUseCaseInput): Promise<FetchMoviesUseCaseOutput> {
+    console.log({ pagination, filter, sort })
     const [countMoviesResult, findManyMoviesResult] = await Promise.all([
       this.countMoviesRepository.count({
-        filters,
+        filter,
       }),
       this.findManyMoviesRepository.findMany({
         pagination,
-        filters,
+        filter,
         sort,
       }),
     ])

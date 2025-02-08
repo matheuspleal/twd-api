@@ -8,7 +8,7 @@ export interface CountMoviesRepositoryFilters {
 }
 
 export interface CountMoviesRepositoryInput {
-  filters?: CountMoviesRepositoryFilters
+  filter?: CountMoviesRepositoryFilters
 }
 
 export interface CountMoviesRepositoryOutput {
@@ -17,6 +17,6 @@ export interface CountMoviesRepositoryOutput {
 
 export interface CountMoviesRepository {
   count({
-    filters,
+    filter,
   }: CountMoviesRepositoryInput): Promise<CountMoviesRepositoryOutput>
 }
