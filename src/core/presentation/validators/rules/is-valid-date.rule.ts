@@ -12,8 +12,14 @@ export class IsValidDateRule implements ValidatorRule {
 
   validate(): ValidationError | undefined {
     const value = this.input.value
+    if (value === undefined) {
+      return undefined
+    }
     const date = new Date(value)
-    if (this.dateRegExp.test(value) || isNaN(date.getTime())) {
+    if (
+      (value !== undefined && !this.dateRegExp.test(value)) ||
+      (value !== undefined && isNaN(date.getTime()))
+    ) {
       return new InvalidDateError(this.input.name)
     }
   }

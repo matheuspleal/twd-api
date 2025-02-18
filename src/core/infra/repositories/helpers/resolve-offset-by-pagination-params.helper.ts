@@ -4,5 +4,5 @@ export function resolveOffsetByPageAndLimit({
   offset,
   limit,
 }: PaginationParams) {
-  return (offset - 1) * limit
+  return offset * limit
 }

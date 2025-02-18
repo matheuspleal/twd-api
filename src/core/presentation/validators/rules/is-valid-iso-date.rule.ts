@@ -13,11 +13,11 @@ export class IsValidISODateRule implements ValidatorRule {
 
   validate(): ValidationError | undefined {
     const value = this.input.value
-    if (typeof value !== 'string' || !this.isoDateRegExp.test(value)) {
-      return new InvalidDateError(this.input.name)
-    }
     const date = new Date(value)
-    if (isNaN(date.getTime())) {
+    if (
+      (value !== undefined && !this.isoDateRegExp.test(value)) ||
+      (value !== undefined && isNaN(date.getTime()))
+    ) {
       return new InvalidDateError(this.input.name)
     }
   }

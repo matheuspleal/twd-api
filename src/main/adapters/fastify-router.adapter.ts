@@ -14,8 +14,8 @@ import { resolvePaginationParams } from '@/core/shared/helpers/resolve-paginatio
 export type Filter = Record<string, unknown>
 
 export interface Page {
-  offset: number
-  limit: number
+  offset: string
+  limit: string
 }
 
 export function fastifyRouterAdapter<
@@ -34,12 +34,17 @@ export function fastifyRouterAdapter<
       comma: true,
       depth: 10,
     })
-    let paginationParams = parsedQuery?.page as unknown as Page
+    const { offset, limit } = parsedQuery.page as unknown as Page
+    let paginationParams = {
+      offset: offset ? Number(offset) : undefined,
+      limit: limit ? Number(limit) : undefined,
+    }
     if (paginationParams) {
       paginationParams = resolvePaginationParams(paginationParams)
     }
+    const { sort = undefined, ...restParsedQuery } = parsedQuery
     const normalizedQuery = camelcaseKeys(
-      { ...parsedQuery, page: { ...paginationParams } },
+      { ...restParsedQuery, page: { ...paginationParams }, sort },
       { deep: true },
     )
     const payload: HttpRequest = {

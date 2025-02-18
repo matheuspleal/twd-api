@@ -47,26 +47,25 @@ export class FetchMoviesController extends HttpController<
   override buildValidators(
     request: FetchMoviesControllerRequest,
   ): ValidatorRule[] {
-    const allRequiredFields: Array<keyof FetchMoviesControllerRequest> = [
-      'fullName',
-      'birthdate',
-      'email',
-      'password',
-    ]
     const validations: ValidatorRule[] = []
     validations.push(
-      ...allRequiredFields.flatMap((requiredField) =>
-        BuilderValidator.of({
-          name: requiredField,
-          value: request[requiredField],
-        })
-          .required()
-          .build(),
-      ),
-    )
-    validations.push(
-      ...BuilderValidator.of({ name: 'password', value: request.password })
-        .isValidPassword()
+      ...BuilderValidator.of({
+        name: 'releaseDate',
+        value: request.filter?.releaseDate,
+      })
+        .isValidDate()
+        .build(),
+      ...BuilderValidator.of({
+        name: 'createdAt',
+        value: request.filter?.createdAt,
+      })
+        .isValidISODate()
+        .build(),
+      ...BuilderValidator.of({
+        name: 'updatedAt',
+        value: request.filter?.updatedAt,
+      })
+        .isValidISODate()
         .build(),
     )
     return validations
@@ -78,7 +77,14 @@ export class FetchMoviesController extends HttpController<
     const { page, filter, sort } = request
     const result = await this.fetchMoviesUseCase.execute({
       pagination: page,
-      filter,
+      filter: {
+        ...filter,
+        releaseDate: filter?.releaseDate
+          ? new Date(filter.releaseDate)
+          : undefined,
+        createdAt: filter?.createdAt ? new Date(filter.createdAt) : undefined,
+        updatedAt: filter?.updatedAt ? new Date(filter.updatedAt) : undefined,
+      },
       sort,
     })
     if (result.isLeft()) {
