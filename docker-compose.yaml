@@ -38,10 +38,10 @@ services:
       timeout: 2s
       retries: 20
 
-networks:
-  net:
-    driver: bridge
-
 volumes:
   app_data:
   db_data:
+
+networks:
+  net:
+    driver: bridge
